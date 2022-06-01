@@ -19,19 +19,19 @@ export default function Home(): JSX.Element {
   } = useInfiniteQuery(
     'images',
     async ({ pageParam = null }) => {
-      return api.get('api/images', {
+      const response = await api.get(`/api/images`, {
         params: {
           after: pageParam,
         },
       });
+
+      return response.data;
     },
     {
       getNextPageParam: lastPage => {
         const { after } = lastPage;
 
-        if (after) {
-          return after;
-        }
+        if (after) return after;
 
         return null;
       },
@@ -39,12 +39,31 @@ export default function Home(): JSX.Element {
   );
 
   const formattedData = useMemo(() => {
-    console.log(data);
+    //  TODO FORMAT AND FLAT DATA ARRAY
+
+    if (data !== undefined) {
+      const cards = data?.pages.flatMap(page => {
+        const allCards = page.data.map(card => {
+          return card;
+        });
+        return allCards;
+      });
+
+      return cards;
+    }
+
+    return [];
   }, [data]);
 
   // TODO RENDER LOADING SCREEN
+  if (isLoading) {
+    return <Loading />;
+  }
 
   // TODO RENDER ERROR SCREEN
+  if (isError) {
+    return <Error />;
+  }
 
   return (
     <>
