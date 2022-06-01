@@ -16,18 +16,30 @@ export default function Home(): JSX.Element {
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery('images', async (pageParam = null) => {
-    const reseponse = await api.get('images', {
-      params: {
-        after: 2,
-      },
-    });
+  } = useInfiniteQuery(
+    'images',
+    async ({ pageParam = null }) => {
+      return api.get('api/images', {
+        params: {
+          after: pageParam,
+        },
+      });
+    },
+    {
+      getNextPageParam: lastPage => {
+        const { after } = lastPage;
 
-    return reseponse.data;
-  });
+        if (after) {
+          return after;
+        }
+
+        return null;
+      },
+    }
+  );
 
   const formattedData = useMemo(() => {
-    // TODO FORMAT AND FLAT DATA ARRAY
+    console.log(data);
   }, [data]);
 
   // TODO RENDER LOADING SCREEN
