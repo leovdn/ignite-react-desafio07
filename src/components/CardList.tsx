@@ -23,14 +23,15 @@ export function CardList({ cards }: CardsProps): JSX.Element {
   const [image, setImage] = useState('');
 
   // TODO FUNCTION HANDLE VIEW IMAGE
-  function handleViewImage(image) {
-    setImage(image);
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  function handleViewImage(imageUrl: string) {
+    setImage(imageUrl);
   }
 
   return (
     <>
       {/* TODO CARD GRID */}
-      <SimpleGrid onClick={onOpen}>
+      <SimpleGrid onClick={onOpen} gridTemplateColumns="1fr 1fr 1fr" gap={40}>
         {cards.map(card => (
           <Card
             data={card}
