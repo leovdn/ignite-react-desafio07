@@ -25,27 +25,22 @@ export function CardList({ cards }: CardsProps): JSX.Element {
   // TODO FUNCTION HANDLE VIEW IMAGE
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   function handleViewImage(imageUrl: string) {
+    onOpen();
     setImage(imageUrl);
   }
 
   return (
     <>
       {/* TODO CARD GRID */}
-      <SimpleGrid
-        onClick={onOpen}
-        gridTemplateColumns="1fr 1fr 1fr"
-        gap="4"
-        minChildWidth="120px"
-        maxChildWidth="120px"
-        alignItems="flex-start"
-      >
-        {cards.map(card => (
-          <Card
-            data={card}
-            key={card.id}
-            viewImage={() => handleViewImage(card.url)}
-          />
-        ))}
+      <SimpleGrid columns={[3]} spacing="40px">
+        {cards.length > 0 &&
+          cards.map(card => (
+            <Card
+              data={card}
+              key={card.id}
+              viewImage={() => handleViewImage(card.url)}
+            />
+          ))}
       </SimpleGrid>
 
       {/* TODO MODALVIEWIMAGE */}
