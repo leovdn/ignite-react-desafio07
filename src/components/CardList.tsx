@@ -31,7 +31,14 @@ export function CardList({ cards }: CardsProps): JSX.Element {
   return (
     <>
       {/* TODO CARD GRID */}
-      <SimpleGrid onClick={onOpen} gridTemplateColumns="1fr 1fr 1fr" gap={40}>
+      <SimpleGrid
+        onClick={onOpen}
+        gridTemplateColumns="1fr 1fr 1fr"
+        gap="4"
+        minChildWidth="120px"
+        maxChildWidth="120px"
+        alignItems="flex-start"
+      >
         {cards.map(card => (
           <Card
             data={card}
